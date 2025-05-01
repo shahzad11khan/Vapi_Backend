@@ -1,12 +1,13 @@
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import Assistant from '../models/assistant.model';
 
 export const createAssistant = async (req: Request, res: Response) => {
   try {
-    const assistant = await Assistant.create(req.body);
-    res.status(201).json(assistant);
+    console.log(req.body , req.user )
+    const assistant = await Assistant.create({...req.body , createdBy : req.user});
+    res.status(201).json({message:"Assistant Added Successfully" , assistant });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create assistant', error });
+    res.status(500).json({ err: 'Failed to create assistant', error });
   }
 };
 

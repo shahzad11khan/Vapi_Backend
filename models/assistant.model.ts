@@ -10,7 +10,8 @@ export interface IAssistant extends Document {
 const AssistantSchema: Schema = new Schema(
     {
         AssistantName: { type: String, required: true },
-        AssistantType: { type: String, required: true },
+        FirstPrompt: { type: String, required: true },
+        SystemPrompt: { type: String, required: true },
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     },
     { timestamps: true }
