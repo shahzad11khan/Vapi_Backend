@@ -14,15 +14,15 @@ app.use(express.json());
 app.use(cors());
 // Routes
 app.use('/api', routes);
-app.post('/chat', async (req , res)=>{
+app.post('/api/chat', async (req , res)=>{
   try {
     console.log(req.body)
-   const {text} = req.body;
-   console.log(text)
-   let geminiResponse = await getGeminiResponse(text); 
-   res.status(200).send({geminiResponse})
+   const {finalText , SystemPrompt} = req.body;
+   let geminiResponse = await getGeminiResponse(finalText , SystemPrompt); 
+   res.status(200).send({message:"data successifully recive" , geminiResponse})
   } catch (error) {
     console.log(error)
+    res.status(200).send({ error : "somthing went wrong"})
   }
 });
 
