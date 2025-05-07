@@ -13,6 +13,7 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "@google/genai": "^0.10.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "bcryptjs": "^3.0.2",

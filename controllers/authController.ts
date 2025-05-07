@@ -3,24 +3,23 @@ import User ,{IUser} from '../models/user.model';
 import jwt from 'jsonwebtoken';
 
 // Login handler
-export const loginUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-     res.json({ warning: 'Email and password are required' });
-  }
-
+export const loginUser = async (req: Request, res: Response): Promise<any> => {
   try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ warning: 'Email and password are required' });
+    }
     const user = await User.findOne({ email })  as IUser;
     if (!user) {
-       res.json({ warning: 'Invalid email or password' });
+      return res.status(400).json({ warning: 'Invalid email or password' });
     }
-
+    
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-       res.json({ warning: 'Invalid email or password' });
+      return res.status(400).send({ warning: 'Invalid  password' });
     }
-
+    
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
       expiresIn: '1y',
@@ -38,6 +37,6 @@ export const loginUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ err: 'Server error' });
+    return res.status(500).json({ err: 'Server error' });
   }
 };
