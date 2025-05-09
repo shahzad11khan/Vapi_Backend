@@ -30,6 +30,11 @@ export const createAssistant = async (req: Request, res: Response) => {
 };
 
 export const getAssistants = async (_req: Request, res: Response) => {
-  const assistants = await Assistant.find();
-  res.status(201).json(assistants);
+  try{
+    const assistants = await Assistant.find();
+    res.status(200).json(assistants);
+  }catch(err){
+    console.log(err)
+    res.status(500).json({ error: 'Failed to create assistant', err });
+  }
 };
