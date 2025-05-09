@@ -4,6 +4,7 @@ import connectDB from './config/db';
 import routes from './routes';
 import cors from 'cors';
 import { getGeminiResponse } from './routes/geminiSeviceRoute';
+import path from 'path'
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 // Routes
+app.use('/file', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', routes);
 app.post('/api/chat', async (req , res)=>{
   try {
